@@ -1,0 +1,78 @@
+.flex{
+    display: flex;
+    gap: var(--gap, 1rem);
+}
+
+
+main{
+    /* border: 5px solid #fff; */
+    border: 2px solid green;
+    margin: 20px 60px;
+    background-color: black;
+    border-radius: 1%;
+    
+}
+
+.grid{
+    display: grid;
+    gap: var(--gap, 1rem);
+}
+
+.grid-container {
+    text-align: center;
+    display: grid;
+    place-items: center;
+    padding-inline: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 100px;
+}
+
+.grid-container > .dot-indicators {
+    grid-area: tabs;
+
+}
+
+.dot-indicators > button{
+    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+}
+
+.grid-container > picture {
+    grid-area: image;
+    width: 90%;
+    border-bottom: 1px solid hsl( var(--clr-white) / .1);
+    border: 1px solid white;
+    border-radius: 25px;
+    overflow: hidden;
+
+
+}
+
+.content{
+    color: #fff;
+    grid-area: content;
+
+}
+
+.numbered-title {
+    grid-area: title;
+    background-color: green;
+    width: 60%;
+    margin: 1rem;
+}
+
+.grid-container {
+    /* grid-template-columns:  */
+    justify-items: start;
+    
+    grid-template-areas: 
+        '. title image.'
+        '. content image  .'
+        '. tabs image  .'
+        
+}
+
+#CarouselID{
+    
+}

@@ -1,0 +1,24 @@
+
+/* .gameCard{
+    border: 2px solid white;
+    width: 2.5rem;
+    height: 1.25rem;
+} */
+
+.cardCarousel{
+    display: flex;
+    flex-direction: row;
+    
+}
+
+.mainSection{
+    border: 2px solid white;
+    margin: 1.5rem 3.5rem;
+   
+}
+
+.gamePicture{
+    width: 20rem;
+    padding: 1rem;
+    
+}
