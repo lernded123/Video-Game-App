@@ -105,6 +105,7 @@ func main() {
 
 		// ...
 
+		// add in a return statement
 		return c.Status(200).JSON(fiber.Map{})
 	})
 
