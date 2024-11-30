@@ -4,3 +4,5 @@ Using React to build out the frontend. I originally thought about doing a movie 
 
 Using golang to build out the backend which is not the traditional route, but I wanted to learn how to use a garbage collector langauge. 
 I was debating between golang and rust but decided that there was few enough use cases that it was better to go with golang. 
+
+For the API I have been using RAWG to populate the games that I have been adding into the directory
