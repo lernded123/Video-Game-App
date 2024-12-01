@@ -17,21 +17,20 @@ import (
 
 var collection *mongo.Collection
 
-
 // game detail information
 type GameDetailed struct {
-	ID                        int                   `json:"id"`
-	Slug                      string                `json:"slug"`
-	Name                      string                `json:"name"`
-	NameOriginal              string                `json:"name_original"`
-	Description               string                `json:"description"`
-	Metacritic                int                   `json:"metacritic"`
-	MetacriticPlatforms       []*MetacriticPlatform `json:"metacritic_platforms"`
-	Released                  DateTime              `json:"released"`
-	Tba                       bool                  `json:"tba"`
-	Updated                   DateTime              `json:"updated"`
-	ImageBackground           string                `json:"background_image"`
-	ImageBackgroundAdditional string                `json:"background_image_additional"`
+	ID           int    `json:"id"`
+	Slug         string `json:"slug"`
+	Name         string `json:"name"`
+	NameOriginal string `json:"name_original"`
+	Description  string `json:"description"`
+	Metacritic   int    `json:"metacritic"`
+	// MetacriticPlatforms       []*MetacriticPlatform `json:"metacritic_platforms"`
+	// Released                  DateTime              `json:"released"`
+	// Tba                       bool                  `json:"tba"`
+	// Updated                   DateTime              `json:"updated"`
+	ImageBackground           string `json:"background_image"`
+	ImageBackgroundAdditional string `json:"background_image_additional"`
 }
 
 func goDotEnvVariable(key string) string {
@@ -46,9 +45,8 @@ func goDotEnvVariable(key string) string {
 	return os.Getenv(key)
 }
 
-
 // get game function
-func (api *Client) GetGame(id int) (*GameDetailed, error)
+// func (api *Client) GetGame(id int) (*GameDetailed, error)
 
 func main() {
 	fmt.Println("hello world")
@@ -86,34 +84,33 @@ func main() {
 		log.Fatal("RAWG_API_KEY is not set in the environment")
 	}
 	config := rawg.Config{
-        ApiKey:  "RAWG_API_KEY", // Your personal API key (see https://rawg.io/apidocs)
-        Language: "ru",
-        Rps:      5,
-    }
-    client := rawg.NewClient(http.DefaultClient, &config)
-    
-    filter := rawg.NewGamesFilter().
-        SetSearch("Gta5").
-        SetPage(1).
-        SetPageSize(10).
-        ExcludeCollection(1).
-        WithoutParents()
-    
-    ctx, cancel := context.WithTimeout(context.Background(), time.Duration(time.Millisecond*500))
-    defer cancel()
-    data, total, err := client.GetGames(ctx, filter)
+		ApiKey:   "RAWG_API_KEY", // Your personal API key (see https://rawg.io/apidocs)
+		Language: "ru",
+		Rps:      5,
+	}
 
-    ...
-	
+	rawgClient = rawg.NewClient(http.DefaultClient, &config)
+
+	app.Get("/games", func(c *fiber.Ctx) error {
+		filter := rawg.NewGamesFilter().
+			SetSearch("Gta5").
+			SetPage(1).
+			SetPageSize(10).
+			ExcludeCollection(1).
+			WithoutParents()
+
+		ctx, cancel := context.WithTimeout(context.Background(), time.Duration(time.Millisecond*500))
+		defer cancel()
+		data, total, err := client.GetGames(ctx, filter)
+
+		// ...
+
+		return c.Status(200).JSON(fiber.Map{})
+	})
 
 	// Start the server
 	log.Fatal(app.Listen(":4000"))
 }
-
-
-
-
-
 
 // rawgConfig := rawg.Config{
 // 	ApiKey:   apiKey, // Your personal API key (see https://rawg.io/apidocs)
