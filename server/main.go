@@ -12,7 +12,8 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
+	// "go.mongodb.org/mongo-driver/mongo"
+	// "go.mongodb.org/mongo-driver/mongo/options"
 )
 
 var collection *mongo.Collection
@@ -56,20 +57,22 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 	// MongoDB setup
-	MONGODB_URI := os.Getenv("MONGODB_URI")
-	clientOptions := options.Client().ApplyURI(MONGODB_URI)
-	client, err := mongo.Connect(context.Background(), clientOptions)
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	// MONGODB_URI := os.Getenv("MONGODB_URI")
+	// clientOptions := options.Client().ApplyURI(MONGODB_URI)
+	// client, err := mongo.Connect(context.Background(), clientOptions)
+
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
 
 	// Verify MongoDB connection
-	err = client.Ping(context.Background(), nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println("Connected to MONGODB ATLAS")
+
+	// err = client.Ping(context.Background(), nil)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// fmt.Println("Connected to MONGODB ATLAS")
 
 	// Initialize Fiber app
 	app := fiber.New()
@@ -89,7 +92,7 @@ func main() {
 		Rps:      5,
 	}
 
-	rawgClient = rawg.NewClient(http.DefaultClient, &config)
+	client = rawg.NewClient(http.DefaultClient, &config)
 
 	app.Get("/games", func(c *fiber.Ctx) error {
 		filter := rawg.NewGamesFilter().
