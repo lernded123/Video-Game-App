@@ -3,7 +3,14 @@ import React from 'react'
 
 const GameTitle = () => {
   return (
-    <div>GameTitle</div>
+    <section>
+        <div>
+            <picture>
+                <img src={gameTitle} alt="" />
+            </picture>
+        </div>
+    </section>
+
   )
 }
 
