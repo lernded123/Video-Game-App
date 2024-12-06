@@ -50,24 +50,12 @@ func goDotEnvVariable(key string) string {
 
 func main() {
 
-	// Load environment variables
-	err := godotenv.Load("../.env")
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-
 	// Initialize Fiber app
 	app := fiber.New()
 
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.Status(200).JSON(fiber.Map{"msg": "hello world"})
 	})
-
-	// Retrieve API key from .env
-	apiKey := goDotEnvVariable("RAWG_API_KEY")
-	if apiKey == "" {
-		log.Fatal("RAWG_API_KEY is not set in the environment")
-	}
 
 	url := "https://api.rawg.io/api/games?key=< apiKey > "
 
