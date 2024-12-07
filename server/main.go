@@ -54,23 +54,6 @@ func main() {
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
-	// MongoDB setup
-
-	// MONGODB_URI := os.Getenv("MONGODB_URI")
-	// clientOptions := options.Client().ApplyURI(MONGODB_URI)
-	// client, err := mongo.Connect(context.Background(), clientOptions)
-
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-
-	// Verify MongoDB connection
-
-	// err = client.Ping(context.Background(), nil)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// fmt.Println("Connected to MONGODB ATLAS")
 
 	// Initialize Fiber app
 	app := fiber.New()
@@ -103,7 +86,27 @@ func main() {
 
 	// Start the server
 	log.Fatal(app.Listen(":4000"))
+
+	// MongoDB setup
+
+	// MONGODB_URI := os.Getenv("MONGODB_URI")
+	// clientOptions := options.Client().ApplyURI(MONGODB_URI)
+	// client, err := mongo.Connect(context.Background(), clientOptions)
+
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// Verify MongoDB connection
+
+	// err = client.Ping(context.Background(), nil)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// fmt.Println("Connected to MONGODB ATLAS")
 }
+
+// old api key stuff
 
 // Retrieve API key from .env
 // apiKey := goDotEnvVariable("RAWG_API_KEY")
