@@ -1,14 +1,12 @@
 package main
 
 import (
-	"context"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"os"
-	"time"
 
-	"github.com/dimuska139/rawg-sdk-go"
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -86,42 +84,39 @@ func main() {
 	if apiKey == "" {
 		log.Fatal("RAWG_API_KEY is not set in the environment")
 	}
-	config := rawg.Config{
-		ApiKey:   "RAWG_API_KEY", // Your personal API key (see https://rawg.io/apidocs)
-		Language: "ru",
-		Rps:      5,
-	}
 
-	client = rawg.NewClient(http.DefaultClient, &config)
+	url := "https://api.rawg.io/api/games?key=96ce35c844ec40458f1b56cc62037d3c"
 
-	app.Get("/games", func(c *fiber.Ctx) error {
-		filter := rawg.NewGamesFilter().
-			SetSearch("Gta5").
-			SetPage(1).
-			SetPageSize(10).
-			ExcludeCollection(1).
-			WithoutParents()
+	req, _ := http.NewRequest("GET", url, nil)
 
-		ctx, cancel := context.WithTimeout(context.Background(), time.Duration(time.Millisecond*500))
-		defer cancel()
-		data, total, err := client.GetGames(ctx, filter)
+	req.Header.Add("accept", "application/json")
 
-		// ...
+	res, _ := http.DefaultClient.Do(req)
 
-		// add in a return statement
-		return c.Status(200).JSON(fiber.Map{})
-	})
+	defer res.Body.Close()
+	body, _ := io.ReadAll(res.Body)
+
+	fmt.Println(string(body))
+
+	// add in a return statement
+	return c.Status(200).JSON(fiber.Map{})
 
 	// Start the server
 	log.Fatal(app.Listen(":4000"))
 }
 
-// rawgConfig := rawg.Config{
-// 	ApiKey:   apiKey, // Your personal API key (see https://rawg.io/apidocs)
+// Retrieve API key from .env
+// apiKey := goDotEnvVariable("RAWG_API_KEY")
+// if apiKey == "" {
+// 	log.Fatal("RAWG_API_KEY is not set in the environment")
+// }
+// config := rawg.Config{
+// 	ApiKey:   "RAWG_API_KEY", // Your personal API key (see https://rawg.io/apidocs)
 // 	Language: "ru",
 // 	Rps:      5,
 // }
-// rawgClient := rawg.NewClient(http.DefaultClient, &rawgConfig)
+
+// client = rawg.NewClient(http.DefaultClient, &config)
 
 // app.Get("/games", func(c *fiber.Ctx) error {
 // 	filter := rawg.NewGamesFilter().
@@ -131,17 +126,8 @@ func main() {
 // 		ExcludeCollection(1).
 // 		WithoutParents()
 
-// 	// ctx, cancel := context.WithTimeout(context.Background(), 500*time.Millisecond)
-// 	// defer cancel()
+// 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(time.Millisecond*500))
+// 	defer cancel()
+// 	data, total, err := client.GetGames(ctx, filter)
 
-// 	gamesData, err := rawgClient.GetGames(filter)
-// 	if err != nil {
-// 		log.Printf("Error fetching games: %v", err)
-// 		return c.Status(500).JSON(fiber.Map{"error": "Failed to fetch games"})
-// 	}
-
-// 	return c.Status(200).JSON(fiber.Map{
-// 		"total": gamesData.Count,
-// 		"games": gamesData.Results,
-// 	})
-// })
+// ...
