@@ -57,7 +57,11 @@ func main() {
 		return c.Status(200).JSON(fiber.Map{"msg": "hello world"})
 	})
 
-	url := "https://api.rawg.io/api/games?key=< apiKey > "
+	dotenv := goDotEnvVariable("RAWG_API_KEY")
+
+	fmt.Printf("godotenv : %s = %s \n", "RAWG API KEY", dotenv)
+
+	url := fmt.Sprintf("https://api.rawg.io/api/games?key=%s ", dotenv)
 
 	req, _ := http.NewRequest("GET", url, nil)
 
