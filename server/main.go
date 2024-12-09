@@ -1,6 +1,7 @@
 package main
 
 import (
+	"C"
 	"fmt"
 	"io"
 	"log"
@@ -48,7 +49,7 @@ func goDotEnvVariable(key string) string {
 // func (api *Client) GetGame(id int) (*GameDetailed, error)
 
 func main() {
-	fmt.Println("hello world")
+
 	// Load environment variables
 	err := godotenv.Load("../.env")
 	if err != nil {
@@ -68,7 +69,7 @@ func main() {
 		log.Fatal("RAWG_API_KEY is not set in the environment")
 	}
 
-	url := "https://api.rawg.io/api/games?key=96ce35c844ec40458f1b56cc62037d3c"
+	url := "https://api.rawg.io/api/games?key=< apiKey > "
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -82,7 +83,7 @@ func main() {
 	fmt.Println(string(body))
 
 	// add in a return statement
-	return c.Status(200).JSON(fiber.Map{})
+	// return c.Status(200).JSON(fiber.Map{})
 
 	// Start the server
 	log.Fatal(app.Listen(":4000"))
