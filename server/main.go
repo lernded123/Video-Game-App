@@ -61,7 +61,7 @@ func main() {
 
 	fmt.Printf("godotenv : %s = %s \n", "RAWG API KEY", dotenv)
 
-	url := fmt.Sprintf("https://api.rawg.io/api/games?key=%s ", dotenv)
+	url := fmt.Sprintf("https://api.rawg.io/api/games/{id}key=%s ", dotenv)
 
 	req, _ := http.NewRequest("GET", url, nil)
 
