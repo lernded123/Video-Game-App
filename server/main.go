@@ -19,18 +19,18 @@ var collection *mongo.Collection
 
 // game detail information
 type GameDetailed struct {
-	ID           int    `json:"id"`
-	Slug         string `json:"slug"`
-	Name         string `json:"name"`
-	NameOriginal string `json:"name_original"`
-	Description  string `json:"description"`
-	Metacritic   int    `json:"metacritic"`
+	ID   int    `json:"id"`
+	Slug string `json:"slug"`
+	Name string `json:"name"`
+	// NameOriginal string `json:"name_original"`
+	Description string `json:"description"`
+	Metacritic  int    `json:"metacritic"`
 	// MetacriticPlatforms       []*MetacriticPlatform `json:"metacritic_platforms"`
 	// Released                  DateTime              `json:"released"`
 	// Tba                       bool                  `json:"tba"`
 	// Updated                   DateTime              `json:"updated"`
-	ImageBackground           string `json:"background_image"`
-	ImageBackgroundAdditional string `json:"background_image_additional"`
+	ImageBackground string `json:"background_image"`
+	// ImageBackgroundAdditional string `json:"background_image_additional"`
 }
 
 func goDotEnvVariable(key string) string {
@@ -61,7 +61,11 @@ func main() {
 
 	fmt.Printf("godotenv : %s = %s \n", "RAWG API KEY", dotenv)
 
-	url := fmt.Sprintf("https://api.rawg.io/api/games/{id}key=%s ", dotenv)
+	//url := fmt.Sprintf("https://api.rawg.io/api/games?key=%s ", dotenv)
+
+	url := fmt.Sprintf("https://api.rawg.io/api/games/274/movies?key=%s ", dotenv)
+
+	//url := "https://api.rawg.io/api/games/id/movies?key=96ce35c844ec40458f1b56cc62037d3c"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
